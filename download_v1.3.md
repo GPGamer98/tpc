@@ -4,3 +4,4 @@ permalink: /download_v1.3
 ---
 
 ### Scarica ora la versione 1.3!
+[button url="http://www.google.com"]
