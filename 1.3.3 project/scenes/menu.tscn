@@ -1,0 +1,133 @@
+[gd_scene load_steps=8 format=3 uid="uid://bbs7ln7edjdnd"]
+
+[ext_resource type="FontFile" uid="uid://2il24uielf43" path="res://resources/Montreal-Regular.ttf" id="1_noq3u"]
+[ext_resource type="Script" path="res://scripts/menu/only_pts.gd" id="2_gbb2n"]
+[ext_resource type="Script" path="res://scripts/menu/pts_games.gd" id="3_lqfee"]
+[ext_resource type="Script" path="res://scenes/Button.gd" id="4_1h2kh"]
+[ext_resource type="Script" path="res://scenes/ver_label.gd" id="5_470wj"]
+[ext_resource type="Texture2D" uid="uid://cvu3hjokywdf0" path="res://resources/icons8-settings-50 (1).png" id="6_nxw7h"]
+[ext_resource type="Script" path="res://scenes/settings_btn.gd" id="7_k5tfa"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.109804, 0.109804, 0.109804, 1)
+
+[node name="only_pts" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -509.0
+offset_top = -39.0
+offset_right = -183.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_noq3u")
+theme_override_font_sizes/font_size = 50
+text = "SOLO PUNTI"
+script = ExtResource("2_gbb2n")
+
+[node name="pts_games" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 179.0
+offset_top = -39.0
+offset_right = 509.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_noq3u")
+theme_override_font_sizes/font_size = 40
+disabled = true
+text = "PUNTI + GAMES"
+script = ExtResource("3_lqfee")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 192.0
+offset_top = -105.0
+offset_right = 551.0
+offset_bottom = -52.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.404916
+theme_override_colors/font_color = Color(1, 0.427451, 0.356863, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_noq3u")
+theme_override_font_sizes/font_size = 40
+text = "IN LAVORAZIONE"
+
+[node name="credits" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -72.0
+offset_top = -38.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_noq3u")
+text = "Crediti"
+script = ExtResource("4_1h2kh")
+
+[node name="ver" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = -32.0
+offset_right = 66.0
+offset_bottom = -9.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_noq3u")
+text = "version"
+script = ExtResource("5_470wj")
+
+[node name="settings" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -66.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 66.0
+grow_horizontal = 0
+icon = ExtResource("6_nxw7h")
+script = ExtResource("7_k5tfa")
+
+[connection signal="pressed" from="only_pts" to="only_pts" method="_on_pressed"]
+[connection signal="pressed" from="pts_games" to="pts_games" method="_on_pressed"]
+[connection signal="pressed" from="credits" to="credits" method="_on_pressed"]
+[connection signal="pressed" from="settings" to="settings" method="_on_pressed"]

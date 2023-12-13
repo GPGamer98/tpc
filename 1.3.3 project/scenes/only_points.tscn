@@ -1,0 +1,418 @@
+[gd_scene load_steps=15 format=3 uid="uid://bgjbsoxvqwfji"]
+
+[ext_resource type="StyleBox" uid="uid://bty0tqlbc8i8b" path="res://styles/only_points.stylebox" id="1_h6suk"]
+[ext_resource type="FontFile" uid="uid://2il24uielf43" path="res://resources/Montreal-Regular.ttf" id="2_4jlrq"]
+[ext_resource type="Script" path="res://scripts/only_points/score_p1.gd" id="3_eur1e"]
+[ext_resource type="Script" path="res://scripts/only_points/score_p2.gd" id="4_tkslw"]
+[ext_resource type="StyleBox" uid="uid://c2y6q48q5wjxp" path="res://styles/button.tres" id="5_bjk1f"]
+[ext_resource type="Script" path="res://scripts/shared/edit_p1.gd" id="6_gldas"]
+[ext_resource type="Script" path="res://scripts/shared/edit_p2.gd" id="7_qtkf3"]
+[ext_resource type="Script" path="res://scripts/shared/done_button_p1.gd" id="8_3hibn"]
+[ext_resource type="Script" path="res://scripts/shared/done_button_p2.gd" id="9_sdd5o"]
+[ext_resource type="Texture2D" uid="uid://ddkukbaeyjl2s" path="res://resources/cropped-LogoMakr-1CblrG-320x320.png" id="10_2ivh2"]
+[ext_resource type="Texture2D" uid="uid://bx2j38j1lfr5x" path="res://resources/icons8-back-50.png" id="11_8vul5"]
+[ext_resource type="Texture2D" uid="uid://chq43rgohdfn3" path="res://resources/icons8-reset-50.png" id="12_pbs42"]
+
+[sub_resource type="GDScript" id="GDScript_oe2rb"]
+script/source = "extends Control
+
+
+@onready var service = $TextureRect
+@onready var p2_panel = $p2_score
+
+@export var p1_score = Label
+@export var p2_score = Label
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	$service_p1.visible = true
+	$service_p2.visible = true
+	$p1_plus.disabled = true
+	$p1_minus.disabled = true
+	$p2_plus.disabled = true
+	$p2_minus.disabled = true
+	service.visible = true
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+
+func _on_plus_pressed():
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC)
+	if service.position == Vector2(203, 238):
+		tween.tween_property(service, \"position\", Vector2(p2_panel.position.x - 73, 238), 0.2)
+	elif service.position == Vector2(p2_panel.position.x - 73, 238):
+		tween.tween_property(service, \"position\", Vector2(203, 238), 0.2)
+
+
+func _on_service_p_1_pressed():
+	$service_p1.visible = false
+	$service_p2.visible = false
+	$p1_plus.disabled = false
+	$p1_minus.disabled = false
+	$p2_plus.disabled = false
+	$p2_minus.disabled = false
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(service, \"position\", Vector2(203, 238), 0.2)
+
+
+func _on_service_p_2_pressed():
+	$service_p1.visible = false
+	$service_p2.visible = false
+	$p1_plus.disabled = false
+	$p1_minus.disabled = false
+	$p2_plus.disabled = false
+	$p2_minus.disabled = false
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(service, \"position\", Vector2(p2_panel.position.x - 73, 238), 0.2)
+
+
+func _on_window_p_1_close_requested():
+	$Window_p1.visible = false
+
+
+func _on_window_p_2_close_requested():
+	$Window_p2.visible = false
+
+
+func _on_menu_button_pressed():
+	get_tree().change_scene_to_file(\"res://scenes/menu.tscn\")
+
+
+func _on_reset_button_pressed():
+	get_tree().reload_current_scene()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fas1u"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 1)
+
+[node name="Control" type="Control" node_paths=PackedStringArray("p1_score", "p2_score")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_oe2rb")
+p1_score = NodePath("p1_score/score")
+p2_score = NodePath("p2_score/score")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.109804, 0.109804, 0.109804, 1)
+
+[node name="p1_score" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 198.0
+offset_right = 180.0
+offset_bottom = 328.0
+pivot_offset = Vector2(65, 65)
+theme_override_styles/panel = ExtResource("1_h6suk")
+
+[node name="score" type="Label" parent="p1_score"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 44.0
+offset_top = 25.0
+offset_right = -44.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 60
+text = "0"
+script = ExtResource("3_eur1e")
+
+[node name="p2_score" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 198.0
+offset_right = -50.0
+offset_bottom = 328.0
+grow_horizontal = 0
+pivot_offset = Vector2(65, 65)
+theme_override_styles/panel = ExtResource("1_h6suk")
+
+[node name="score" type="Label" parent="p2_score"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 44.0
+offset_top = 25.0
+offset_right = -44.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 60
+text = "0"
+script = ExtResource("4_tkslw")
+
+[node name="p1_name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 47.0
+offset_right = 437.0
+offset_bottom = 118.0
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 50
+text = "Giocatore 1"
+
+[node name="p2_name" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -437.0
+offset_top = 47.0
+offset_right = -47.0
+offset_bottom = 118.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 50
+text = "Giocatore 2"
+horizontal_alignment = 2
+
+[node name="p1_minus" type="Button" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 361.0
+offset_right = 89.0
+offset_bottom = 444.0
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_fas1u")
+text = "-"
+
+[node name="p1_plus" type="Button" parent="."]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 361.0
+offset_right = 242.0
+offset_bottom = 444.0
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_fas1u")
+text = "+"
+
+[node name="p2_minus" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -89.0
+offset_top = 361.0
+offset_right = -47.0
+offset_bottom = 444.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("5_bjk1f")
+text = "-"
+
+[node name="p2_plus" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -242.0
+offset_top = 361.0
+offset_right = -200.0
+offset_bottom = 444.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("5_bjk1f")
+text = "+"
+
+[node name="edit_p1" type="Button" parent="." node_paths=PackedStringArray("window")]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 493.0
+offset_right = 85.0
+offset_bottom = 524.0
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 25
+text = "Modifica nome"
+script = ExtResource("6_gldas")
+window = NodePath("../Window_p1")
+
+[node name="edit_p2" type="Button" parent="." node_paths=PackedStringArray("window")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -245.0
+offset_top = 493.0
+offset_right = -47.0
+offset_bottom = 533.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 25
+text = "Modifica nome"
+script = ExtResource("7_qtkf3")
+window = NodePath("../Window_p2")
+
+[node name="Window_p1" type="Window" parent="."]
+mode = 1
+initial_position = 2
+size = Vector2i(400, 200)
+visible = false
+
+[node name="TextEdit" type="TextEdit" parent="Window_p1"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 370.0
+offset_bottom = 70.0
+placeholder_text = "Nome"
+
+[node name="Button" type="Button" parent="Window_p1" node_paths=PackedStringArray("textbox", "name_label", "window")]
+offset_left = 150.0
+offset_top = 100.0
+offset_right = 250.0
+offset_bottom = 150.0
+text = "Fatto"
+script = ExtResource("8_3hibn")
+textbox = NodePath("../TextEdit")
+name_label = NodePath("../../p1_name")
+window = NodePath("..")
+
+[node name="Window_p2" type="Window" parent="."]
+mode = 1
+initial_position = 2
+size = Vector2i(400, 200)
+visible = false
+
+[node name="TextEdit" type="TextEdit" parent="Window_p2"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 370.0
+offset_bottom = 70.0
+placeholder_text = "Nome"
+
+[node name="Button" type="Button" parent="Window_p2" node_paths=PackedStringArray("textbox", "name_label", "window")]
+offset_left = 150.0
+offset_top = 100.0
+offset_right = 250.0
+offset_bottom = 150.0
+text = "Fatto"
+script = ExtResource("9_sdd5o")
+textbox = NodePath("../TextEdit")
+name_label = NodePath("../../p2_name")
+window = NodePath("..")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -151.0
+offset_right = 25.0
+offset_bottom = -101.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_2ivh2")
+expand_mode = 1
+
+[node name="service_p1" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -86.0
+offset_right = -149.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 30
+text = "Servizio"
+
+[node name="service_p2" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 149.0
+offset_top = -86.0
+offset_right = 276.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_4jlrq")
+theme_override_font_sizes/font_size = 30
+text = "Servizio"
+
+[node name="menu_btn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = -73.0
+offset_right = 67.0
+offset_bottom = -15.0
+grow_vertical = 0
+pivot_offset = Vector2(0, 58)
+icon = ExtResource("11_8vul5")
+flat = true
+
+[node name="reset_btn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -73.0
+offset_top = -73.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 0
+grow_vertical = 0
+icon = ExtResource("12_pbs42")
+
+[connection signal="pressed" from="p1_minus" to="p1_score/score" method="_on_minus_pressed"]
+[connection signal="pressed" from="p1_plus" to="." method="_on_plus_pressed"]
+[connection signal="pressed" from="p1_plus" to="p1_score/score" method="_on_plus_pressed"]
+[connection signal="pressed" from="p2_minus" to="p2_score/score" method="_on_minus_pressed"]
+[connection signal="pressed" from="p2_plus" to="." method="_on_plus_pressed"]
+[connection signal="pressed" from="p2_plus" to="p2_score/score" method="_on_plus_pressed"]
+[connection signal="pressed" from="edit_p1" to="edit_p1" method="_on_pressed"]
+[connection signal="pressed" from="edit_p2" to="edit_p2" method="_on_pressed"]
+[connection signal="close_requested" from="Window_p1" to="." method="_on_window_p_1_close_requested"]
+[connection signal="pressed" from="Window_p1/Button" to="Window_p1/Button" method="_on_pressed"]
+[connection signal="close_requested" from="Window_p2" to="." method="_on_window_p_2_close_requested"]
+[connection signal="pressed" from="Window_p2/Button" to="Window_p2/Button" method="_on_pressed"]
+[connection signal="pressed" from="service_p1" to="." method="_on_service_p_1_pressed"]
+[connection signal="pressed" from="service_p2" to="." method="_on_service_p_2_pressed"]
+[connection signal="pressed" from="menu_btn" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="reset_btn" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="reset_btn" to="p1_score/score" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="reset_btn" to="p2_score/score" method="_on_reset_button_pressed"]
